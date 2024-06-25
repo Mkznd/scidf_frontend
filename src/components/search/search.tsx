@@ -1,23 +1,8 @@
 import {useEffect, useState} from 'react';
 import axios from "axios";
 
-const Search = () => {
+const Search = ({handleSearch}) => {
     const [searchValue, setSearchValue] = useState('');
-    const [refinedSearch, setRefinedSearch] = useState('');
-
-    useEffect(() => {
-        console.log(refinedSearch);
-    }, [refinedSearch]);
-
-    async function handleSearch(e: React.FormEvent) {
-        e.preventDefault();
-        const response = await axios.post('http://localhost:8000/refine', null, {
-            params: {
-                search: searchValue
-            }
-        });
-        setRefinedSearch(response.data)
-    }
 
     return (
         <form onSubmit={handleSearch} className={'flex justify-center gap-2'}>
