@@ -1,13 +1,7 @@
 import Search from "../../components/search/search";
 import axios from "axios";
-import {useEffect, useState} from "react";
 
 const PaperSearch = () => {
-    const [refinedSearch, setRefinedSearch] = useState('');
-
-    useEffect(() => {
-        console.log(refinedSearch);
-    }, [refinedSearch]);
 
     return (
         <div>
@@ -18,12 +12,25 @@ const PaperSearch = () => {
     async function handleSearch(e: React.FormEvent) {
         e.preventDefault();
         const searchText = e.currentTarget.querySelector('input').value;
-        const response = await axios.post('http://localhost:8000/refine', null, {
+        const refinedQuery = await refineQuery(searchText);
+        const refinedSubqueries = await createSubqueries(refinedQuery.data);
+        console.log(refinedSubqueries);
+    }
+
+    async function refineQuery(query: string) {
+        return await axios.post('http://localhost:8000/refine', null, {
             params: {
-                search: searchText
+                query: query
             }
         });
-        setRefinedSearch(response.data)
+    }
+
+    async function createSubqueries(query: string) {
+        return await axios.post('http://localhost:8000/subqueries', null, {
+            params: {
+                query: query
+            }
+        });
     }
 }
 
