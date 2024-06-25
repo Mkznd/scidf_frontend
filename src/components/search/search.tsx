@@ -1,15 +1,22 @@
-import React, {useState} from 'react';
+import {useEffect, useState} from 'react';
+import axios from "axios";
 
 const Search = () => {
     const [searchValue, setSearchValue] = useState('');
+    const [refinedSearch, setRefinedSearch] = useState('');
 
-    function handleSearch(e: React.FormEvent) {
+    useEffect(() => {
+        console.log(refinedSearch);
+    }, [refinedSearch]);
+
+    async function handleSearch(e: React.FormEvent) {
         e.preventDefault();
-        const a = fetch(`http://localhost:8000/`)
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.log(error));
-        console.log(searchValue);
+        const response = await axios.post('http://localhost:8000/refine', null, {
+            params: {
+                search: searchValue
+            }
+        });
+        setRefinedSearch(response.data)
     }
 
     return (
