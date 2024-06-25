@@ -18,7 +18,7 @@ const PaperSearch = () => {
     }
 
     async function refineQuery(query: string) {
-        return await axios.post('http://localhost:8000/refine', null, {
+        return await axios.post(`${import.meta.env.VITE_BACKEND_URL}/refine`, null, {
             params: {
                 query: query
             }
@@ -26,7 +26,7 @@ const PaperSearch = () => {
     }
 
     async function createSubqueries(query: string) {
-        return await axios.post('http://localhost:8000/subqueries', null, {
+        return await axios.post(`${import.meta.env.VITE_BACKEND_URL}/subqueries`, null, {
             params: {
                 query: query
             }
