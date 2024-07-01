@@ -12,8 +12,12 @@
   "dependencies": {
     "axios": "^1.7.2",
     "dotenv": "^16.4.5",
+    "gulp": "^5.0.0",
+    "pdfjs-dist": "^4.3.136",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-pdf": "^9.0.0",
+    "react-pdf-viewer": "^0.1.0"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
