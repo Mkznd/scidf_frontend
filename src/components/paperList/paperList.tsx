@@ -1,25 +1,30 @@
 import Paper from "../../../types/paper.tsx";
+import {Box, List, ListItem} from "@mui/material";
 
 interface PaperListProps {
     papers: Paper[];
-    setPaper: (paper: Paper) => void;
+    setSelectedPaper: (paper: Paper) => void;
+    selectedPaper: Paper | null;
+    loading: boolean;
 }
 
-const PaperList = ({papers, setPaper}: PaperListProps) => {
-    if (papers.length === 0) return (<div className={"text-center"}>No papers found</div>);
+const PaperList = ({papers, selectedPaper, setSelectedPaper, loading}: PaperListProps) => {
+    if (loading && papers.length === 0) return (<div className={"text-center"}>Loading...</div>);
 
     return (
-        <div className={"flex flex-col justify-center gap-5"}>
-            {papers.map((paper: Paper) => {
-                return (
-                    <div key={paper.id} className={"border-b-2 p-2"}>
-                        <h2 className={"text-2xl"} onClick={() => setPaper(paper)}>{paper.title}</h2>
-                        <div>{paper.authors.join(', ')}</div>
+        <Box sx={{width: "100%"}}>
+            <List className={"pt-0 pl-2"}>
+                {papers.map((paper, index) => (
+                    <ListItem key={index} elevation={0}
+                              className={`flex flex-col justify-around !items-start border-2 rounded-sm min-h-20 pt-0 !mt-0 mb-3 cursor-pointer ${paper.id == selectedPaper?.id ? "bg-slate-200" : ""}`}
+                              onClick={() => setSelectedPaper(paper)}>
+                        <h2 className={"text-xl"}>{paper.title}</h2>
+                        <p>{paper.authors.join(', ')}</p>
                         <div>{paper.published}</div>
-                    </div>
-                )
-            })}
-        </div>
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
     )
 }
 
